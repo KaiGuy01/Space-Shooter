@@ -152,7 +152,7 @@ public class Player : MonoBehaviour
 
     }
 
-    public void Damage()
+    public void Damage(int damageAmount)
     {
         if (_isShieldActive == true)
         {
@@ -176,7 +176,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            _lives--;
+            _lives -= damageAmount;
 
             _uIManager.UpdateLives(_lives);
 
@@ -238,6 +238,25 @@ public class Player : MonoBehaviour
         _uIManager.UpdateAmmo(_currentAmmo, _ammoCapacity);
     }
 
+    public void RestoreHealth()
+    {
+        switch (_lives)
+        {
+            case 1:
+                _lives++;
+                _rightEngine.SetActive(false);
+                _uIManager.UpdateLives(_lives);
+                break;
+            case 2:
+                _lives++;
+                _leftEngine.SetActive(false);
+                _uIManager.UpdateLives(_lives);
+                break;
+            case 3:
+                Debug.Log("Health is already full.");
+                break;
+        }
+    }
     #endregion
 
     #region Score
