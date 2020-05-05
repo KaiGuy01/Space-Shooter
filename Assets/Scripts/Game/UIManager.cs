@@ -24,6 +24,10 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _shieldText;
 
+    [Header("Projectiles")]
+    [SerializeField]
+    private TextMeshProUGUI _ammoText;
+
     [SerializeField]
     private TextMeshProUGUI _gameOverText;
 
@@ -60,6 +64,11 @@ public class UIManager : MonoBehaviour
     public void UpdateShield(int shieldStrength)
     {
         _shieldText.text = "Shield Strength: " + shieldStrength;
+    }
+
+    public void UpdateAmmo(int ammoCount, int ammoCapacity)
+    {
+        _ammoText.text = ammoCount + " / " + ammoCapacity;
     }
 
     void GameOverSequence()

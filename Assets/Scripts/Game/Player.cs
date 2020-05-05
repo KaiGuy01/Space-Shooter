@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     [Header("Projectiles")]
     [SerializeField]
     private GameObject _laser;
+    private int _ammoCapacity = 15;
+    private int _currentAmmo = 15;
 
     [Header("Cooldown")]
     [SerializeField]
@@ -129,16 +131,25 @@ public class Player : MonoBehaviour
     {
         _canFire = Time.time + _fireRate;
 
-        if (_isTripleShotActive == true)
+        if (_currentAmmo > 0)
         {
-            Instantiate(_tripleShot, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
-        }
-        else
-        {
-            Instantiate(_laser, new Vector3(transform.position.x, transform.position.y + 1.75f, transform.position.z), Quaternion.identity);
+            if (_isTripleShotActive == true)
+            {
+                Instantiate(_tripleShot, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+                _currentAmmo--;
+                _uIManager.UpdateAmmo(_currentAmmo, _ammoCapacity);
+            }
+            else
+            {
+                Instantiate(_laser, new Vector3(transform.position.x, transform.position.y + 1.75f, transform.position.z), Quaternion.identity);
+                _currentAmmo--;
+                _uIManager.UpdateAmmo(_currentAmmo, _ammoCapacity);
+            }
+
+            _audioSource.Play();
         }
 
-        _audioSource.Play();
+
     }
 
     public void Damage()
