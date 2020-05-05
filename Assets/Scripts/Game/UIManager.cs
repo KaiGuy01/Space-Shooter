@@ -20,6 +20,10 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Sprite[] _liveSprites;
 
+    [Header("Shield")]
+    [SerializeField]
+    private TextMeshProUGUI _shieldText;
+
     [SerializeField]
     private TextMeshProUGUI _gameOverText;
 
@@ -51,6 +55,11 @@ public class UIManager : MonoBehaviour
         {
             GameOverSequence();
         }
+    }
+
+    public void UpdateShield(int shieldStrength)
+    {
+        _shieldText.text = "Shield Strength: " + shieldStrength;
     }
 
     void GameOverSequence()

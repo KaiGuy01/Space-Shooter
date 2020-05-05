@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _thruster;
     private UIManager _uIManager;
+    private int _shieldStrength = 3;
     public int score = 0;
 
     [Header("Powerups")]
@@ -144,8 +145,23 @@ public class Player : MonoBehaviour
     {
         if (_isShieldActive == true)
         {
-            _isShieldActive = false;
-            _shieldVisualizer.SetActive(false);
+            _shieldStrength--;
+            _uIManager.UpdateShield(_shieldStrength);
+
+            switch (_shieldStrength)
+            {
+                case 2:
+                    _shieldVisualizer.GetComponent<SpriteRenderer>().color = Color.yellow;
+                    break;
+                case 1:
+                    _shieldVisualizer.GetComponent<SpriteRenderer>().color = Color.red;
+                    break;
+                case 0:
+                    _isShieldActive = false;
+                    _shieldVisualizer.SetActive(false);
+                    _shieldStrength = 3;
+                    break;
+            }
         }
         else
         {
@@ -202,6 +218,7 @@ public class Player : MonoBehaviour
     {
         _isShieldActive = true;
         _shieldVisualizer.SetActive(true);
+        _uIManager.UpdateShield(_shieldStrength);
     }
 
     #endregion
