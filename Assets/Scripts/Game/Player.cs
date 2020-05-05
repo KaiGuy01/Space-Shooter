@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
     #region Variables
     [SerializeField]
     private float _speed = 3.5f;
+    [SerializeField]
+    private float _boost = 1.5f;
 
     [Header("Projectiles")]
     [SerializeField]
@@ -22,6 +24,8 @@ public class Player : MonoBehaviour
     private int _lives = 3;
     [SerializeField]
     private GameObject _leftEngine, _rightEngine;
+    [SerializeField]
+    private GameObject _thruster;
     private UIManager _uIManager;
     public int score = 0;
 
@@ -46,7 +50,6 @@ public class Player : MonoBehaviour
     private AudioSource _audioSource;
 
     #endregion
-    // Start is called before the first frame update
     void Start()
     {
         //Take the current position, assign start position
@@ -86,8 +89,19 @@ public class Player : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        transform.Translate(Vector3.right * horizontalInput * _speed * Time.deltaTime);
-        transform.Translate(Vector3.up * verticalInput * _speed * Time.deltaTime);
+        if (_isSpeedActive == false && Input.GetKey(KeyCode.LeftShift))
+        {
+            transform.Translate(Vector3.right * horizontalInput * _speed * _boost * Time.deltaTime);
+            transform.Translate(Vector3.up * verticalInput * _speed * _boost * Time.deltaTime);
+            _thruster.SetActive(true);
+
+        }
+        else
+        {
+            transform.Translate(Vector3.right * horizontalInput * _speed * Time.deltaTime);
+            transform.Translate(Vector3.up * verticalInput * _speed * Time.deltaTime);
+            _thruster.SetActive(false);
+        }
 
         if (transform.position.x >= 11.3f)
         {
@@ -106,6 +120,8 @@ public class Player : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, 0f, 0);
         }
+
+
     }
 
     void Shoot()
