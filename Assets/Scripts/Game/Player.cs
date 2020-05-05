@@ -232,6 +232,12 @@ public class Player : MonoBehaviour
         _uIManager.UpdateShield(_shieldStrength);
     }
 
+    public void RestoreAmmo()
+    {
+        _currentAmmo = _ammoCapacity;
+        _uIManager.UpdateAmmo(_currentAmmo, _ammoCapacity);
+    }
+
     #endregion
 
     #region Score

@@ -1434,6 +1434,7 @@ MonoBehaviour:
   - {fileID: 2367514650307026201, guid: ca4323d339904b1428cdb00c2a6e7f64, type: 3}
   - {fileID: 1511154640551189689, guid: e44601add4f70ad40ad5c6978817372b, type: 3}
   - {fileID: 4003520739233852183, guid: 7e080cd1a5dfb3c4b964c65c4adfe58f, type: 3}
+  - {fileID: 6683275056910795185, guid: c24fe6d56fe614c4c814895facb1db22, type: 3}
   _spawnDelay: 5
   _enemyContainer: {fileID: 1295969166}
 --- !u!4 &1449673396
