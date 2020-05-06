@@ -28,6 +28,10 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _ammoText;
 
+    [Header("Thruster")]
+    [SerializeField]
+    private Image _thrusterImage;
+
     [SerializeField]
     private TextMeshProUGUI _gameOverText;
 
@@ -69,6 +73,11 @@ public class UIManager : MonoBehaviour
     public void UpdateAmmo(int ammoCount, int ammoCapacity)
     {
         _ammoText.text = ammoCount + " / " + ammoCapacity;
+    }
+
+    public void UpdateThruster(float thrusterCharge)
+    {
+        _thrusterImage.fillAmount = thrusterCharge / 100;
     }
 
     void GameOverSequence()

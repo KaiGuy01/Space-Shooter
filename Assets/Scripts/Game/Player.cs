@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -26,11 +27,20 @@ public class Player : MonoBehaviour
     private int _lives = 3;
     [SerializeField]
     private GameObject _leftEngine, _rightEngine;
-    [SerializeField]
-    private GameObject _thruster;
     private UIManager _uIManager;
     private int _shieldStrength = 3;
     public int score = 0;
+
+    [Header("Thrusters")]
+    [SerializeField]
+    private GameObject _thruster;
+    [SerializeField]
+    private float _thrusterCharge;
+    [SerializeField]
+    private int _depletionRate = 5;
+    [SerializeField]
+    private bool _thrusterAvailable = true;
+
 
     [Header("Powerups")]
     [SerializeField]
@@ -95,18 +105,32 @@ public class Player : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        if (_isSpeedActive == false && Input.GetKey(KeyCode.LeftShift))
+        if (_isSpeedActive == false && Input.GetKey(KeyCode.LeftShift) && _thrusterAvailable == true) //Enables thrusters if fully charged
         {
             transform.Translate(Vector3.right * horizontalInput * _speed * _boost * Time.deltaTime);
             transform.Translate(Vector3.up * verticalInput * _speed * _boost * Time.deltaTime);
+
             _thruster.SetActive(true);
 
+            _thrusterCharge = _thrusterCharge - _depletionRate * Time.deltaTime;
+            _uIManager.UpdateThruster(_thrusterCharge);
         }
         else
         {
             transform.Translate(Vector3.right * horizontalInput * _speed * Time.deltaTime);
             transform.Translate(Vector3.up * verticalInput * _speed * Time.deltaTime);
             _thruster.SetActive(false);
+            
+            if (_thrusterCharge < 100) //Recharges thrusters while shift is not being pressed
+            {
+                _thrusterCharge = _thrusterCharge + _depletionRate * Time.deltaTime;
+                _uIManager.UpdateThruster(_thrusterCharge);
+            }
+        }
+
+        if (_thrusterCharge < 1)
+        {
+            StartCoroutine("ThrusterCooldown");
         }
 
         if (transform.position.x >= 11.3f)
@@ -128,6 +152,13 @@ public class Player : MonoBehaviour
         }
 
 
+    }
+
+    IEnumerator ThrusterCooldown()
+    {
+        _thrusterAvailable = false;
+        yield return new WaitForSeconds(_depletionRate);
+        _thrusterAvailable = true;
     }
 
     void Shoot()
