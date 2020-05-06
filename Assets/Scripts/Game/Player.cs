@@ -30,6 +30,8 @@ public class Player : MonoBehaviour
     private UIManager _uIManager;
     private int _shieldStrength = 3;
     public int score = 0;
+    [SerializeField]
+    private Animator _anim;
 
     [Header("Thrusters")]
     [SerializeField]
@@ -194,6 +196,8 @@ public class Player : MonoBehaviour
 
     public void Damage(int damageAmount)
     {
+        _anim.SetTrigger("Damage");
+
         if (_isShieldActive == true)
         {
             _shieldStrength--;

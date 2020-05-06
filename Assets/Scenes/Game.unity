@@ -2417,8 +2417,12 @@ MonoBehaviour:
   _lives: 3
   _leftEngine: {fileID: 95948101520750153}
   _rightEngine: {fileID: 1415486175}
-  _thruster: {fileID: 245759715}
   score: 0
+  _anim: {fileID: 2007794156}
+  _thruster: {fileID: 245759715}
+  _thrusterCharge: 100
+  _depletionRate: 10
+  _thrusterAvailable: 1
   _isTripleShotActive: 0
   _isWaveShotActive: 0
   _isSpeedActive: 0
@@ -2514,6 +2518,7 @@ GameObject:
   - component: {fileID: 2007794153}
   - component: {fileID: 2007794152}
   - component: {fileID: 2007794155}
+  - component: {fileID: 2007794156}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2554,7 +2559,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 59
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -2646,6 +2651,25 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!95 &2007794156
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007794151}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 08b11b5b8118c344397c9ed30b86d332, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &95948101520750152
 PrefabInstance:
   m_ObjectHideFlags: 0
