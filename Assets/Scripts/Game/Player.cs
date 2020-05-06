@@ -36,6 +36,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private bool _isTripleShotActive = false;
     [SerializeField]
+    private bool _isWaveShotActive = false;
+    [SerializeField]
     private bool _isSpeedActive = false;
     [SerializeField]
     private bool _isShieldActive = false;
@@ -44,6 +46,8 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private GameObject _tripleShot;
+    [SerializeField]
+    private GameObject _waveShot;
     [SerializeField]
     private GameObject _shieldVisualizer;
 
@@ -76,7 +80,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         CalculateMovement();
@@ -136,6 +139,12 @@ public class Player : MonoBehaviour
             if (_isTripleShotActive == true)
             {
                 Instantiate(_tripleShot, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+                _currentAmmo--;
+                _uIManager.UpdateAmmo(_currentAmmo, _ammoCapacity);
+            }
+            else if (_isWaveShotActive == true)
+            {
+                Instantiate(_waveShot, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
                 _currentAmmo--;
                 _uIManager.UpdateAmmo(_currentAmmo, _ammoCapacity);
             }
@@ -201,14 +210,20 @@ public class Player : MonoBehaviour
 
     public void TripleShotActive()
     {
-        _isTripleShotActive = true;
-        StartCoroutine("DisableTripleShot");
+        if (_isWaveShotActive == false)
+        {
+            _isTripleShotActive = true;
+            StartCoroutine("DisableTripleShot");
+        }
     }
 
-    IEnumerator DisableTripleShot()
+    public void WaveShotActive()
     {
-        yield return new WaitForSeconds(5);
-        _isTripleShotActive = false;
+        if (_isTripleShotActive == false)
+        {
+            _isWaveShotActive = true;
+            StartCoroutine("DisableWaveShot");
+        }
     }
 
     public void SpeedActive()
@@ -218,18 +233,20 @@ public class Player : MonoBehaviour
         StartCoroutine("DisableSpeed");
     }
 
-    IEnumerator DisableSpeed()
-    {
-        yield return new WaitForSeconds(5);
-        _speed = _speed / _speedMultiplier;
-        _isSpeedActive = false;
-    }
-
     public void ShieldActive()
     {
-        _isShieldActive = true;
-        _shieldVisualizer.SetActive(true);
-        _uIManager.UpdateShield(_shieldStrength);
+        if (_isShieldActive == true)
+        {
+            _shieldStrength = 3;
+            _shieldVisualizer.GetComponent<SpriteRenderer>().color = new Color(0, 255, 225);
+            _uIManager.UpdateShield(_shieldStrength);
+        }
+        else
+        {
+            _isShieldActive = true;
+            _shieldVisualizer.SetActive(true);
+            _uIManager.UpdateShield(_shieldStrength);
+        }
     }
 
     public void RestoreAmmo()
@@ -244,18 +261,37 @@ public class Player : MonoBehaviour
         {
             case 1:
                 _lives++;
-                _rightEngine.SetActive(false);
+                _leftEngine.SetActive(false);
                 _uIManager.UpdateLives(_lives);
                 break;
             case 2:
                 _lives++;
-                _leftEngine.SetActive(false);
+                _rightEngine.SetActive(false);
                 _uIManager.UpdateLives(_lives);
                 break;
             case 3:
                 Debug.Log("Health is already full.");
                 break;
         }
+    }
+
+    IEnumerator DisableTripleShot()
+    {
+        yield return new WaitForSeconds(5);
+        _isTripleShotActive = false;
+    }
+
+    IEnumerator DisableSpeed()
+    {
+        yield return new WaitForSeconds(5);
+        _speed = _speed / _speedMultiplier;
+        _isSpeedActive = false;
+    }
+
+    IEnumerator DisableWaveShot()
+    {
+        yield return new WaitForSeconds(5);
+        _isWaveShotActive = false;
     }
     #endregion
 

@@ -1410,6 +1410,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1449673396}
   - component: {fileID: 1449673395}
+  - component: {fileID: 1449673397}
   m_Layer: 0
   m_Name: Spawn Manager
   m_TagString: Untagged
@@ -1430,13 +1431,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemy: {fileID: 8535327604784431814, guid: 5d4da4bb61f5f554ea4ae92046e8e06f, type: 3}
-  _powerups:
-  - {fileID: 2367514650307026201, guid: ca4323d339904b1428cdb00c2a6e7f64, type: 3}
-  - {fileID: 1511154640551189689, guid: e44601add4f70ad40ad5c6978817372b, type: 3}
-  - {fileID: 4003520739233852183, guid: 7e080cd1a5dfb3c4b964c65c4adfe58f, type: 3}
-  - {fileID: 6683275056910795185, guid: c24fe6d56fe614c4c814895facb1db22, type: 3}
-  - {fileID: 1902479272674062515, guid: 6f3a261e69791ff4b96b7e14ec86e468, type: 3}
-  _spawnDelay: 5
+  _spawnDelay: {x: 5, y: 10}
   _enemyContainer: {fileID: 1295969166}
 --- !u!4 &1449673396
 Transform:
@@ -1453,6 +1448,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1449673397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449673394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c57c606b8f9b0734b969ac2a1a5ff1b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerups:
+  - {fileID: 6683275056910795185, guid: c24fe6d56fe614c4c814895facb1db22, type: 3}
+  - {fileID: 1902479272674062515, guid: 6f3a261e69791ff4b96b7e14ec86e468, type: 3}
+  - {fileID: 4003520739233852183, guid: 7e080cd1a5dfb3c4b964c65c4adfe58f, type: 3}
+  - {fileID: 1511154640551189689, guid: e44601add4f70ad40ad5c6978817372b, type: 3}
+  - {fileID: 2367514650307026201, guid: ca4323d339904b1428cdb00c2a6e7f64, type: 3}
+  - {fileID: 4760979478607808078, guid: 4914de4ba31ae964582c7a200686bbef, type: 3}
+  table: 1a00000018000000140000000f0000000a00000005000000
+  total: 0
+  randomNumber: 0
 --- !u!1 &1459926442
 GameObject:
   m_ObjectHideFlags: 0
@@ -2401,10 +2418,12 @@ MonoBehaviour:
   _thruster: {fileID: 245759715}
   score: 0
   _isTripleShotActive: 0
+  _isWaveShotActive: 0
   _isSpeedActive: 0
   _isShieldActive: 0
   _speedMultiplier: 2
   _tripleShot: {fileID: 8104307715625631789, guid: 2ff07e4484358204f8781b441415e837, type: 3}
+  _waveShot: {fileID: 8352709336173350045, guid: 2c26ea24109990247bf31c9da3f8087f, type: 3}
   _shieldVisualizer: {fileID: 1027341387}
   _laserAudio: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
 --- !u!1 &2007794151
