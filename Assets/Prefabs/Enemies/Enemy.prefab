@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 2932515558521211041}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,6 +53,7 @@ MonoBehaviour:
   _scoreValue: 10
   _clip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _laserPrefab: {fileID: 7653490018285459686, guid: c88bd1d97ed085149b7bc85b17f4c023, type: 3}
+  _fireRate: 3
 --- !u!61 &4358351022394746426
 BoxCollider2D:
   m_ObjectHideFlags: 0

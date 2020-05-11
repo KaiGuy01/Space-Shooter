@@ -5,7 +5,9 @@ using UnityEngine;
 public class Table : MonoBehaviour
 {
     public List<GameObject> powerups;
-    public int[] table = { 
+    [Header("Spawn Values")]
+    public int[] powerup = 
+    { 
         26, //Ammo drop
         24, //Health drop
         20, //Shield drop
@@ -14,8 +16,19 @@ public class Table : MonoBehaviour
         5 //Wave Shot drop
     };
 
-    public int total;
-    public int randomNumber;
+    public int pTotal;
+    public int randomPowerup;
+
+    public List<GameObject> enemies;
+    [Header("Spawn Values")]
+    public int[] enemy =
+    {
+        75, //Downward movement
+        25 //Strafe movement
+    };
+
+    public int eTotal;
+    public int randomEnemy;
 
     private SpawnManager _spawnManager;
 
@@ -28,23 +41,28 @@ public class Table : MonoBehaviour
             Debug.Log(gameObject.name + " Spawn Manager reference is NULL");
         }
 
-        Debug.Log("Calculating Loot Table");
+        Debug.Log("Calculating Tables");
 
-        foreach (var item in table)
+        foreach (var item in powerup)
         {
-            total += item;
+            pTotal += item;
+        }
+
+        foreach (var entity in enemy)
+        {
+            eTotal += entity;
         }
 
     }
 
-    public void CalculateLoot()
+    public void CalculatePowerup()
     {
 
-        randomNumber = Random.Range(0, total);
+        randomPowerup = Random.Range(0, pTotal);
 
-        for (int i = 0; i < table.Length; i++)
+        for (int i = 0; i < powerup.Length; i++)
         {
-            if (randomNumber <= table[i])
+            if (randomPowerup <= powerup[i])
             {
                 GameObject _randomPowerup = powerups[i];
                 Debug.Log(_randomPowerup.name);
@@ -54,7 +72,29 @@ public class Table : MonoBehaviour
             }
             else
             {
-                randomNumber -= table[i];
+                randomPowerup -= powerup[i];
+            }
+        }
+    }
+
+    public void CalculateEnemy()
+    {
+
+        randomEnemy = Random.Range(0, pTotal);
+
+        for (int i = 0; i < enemy.Length; i++)
+        {
+            if (randomEnemy <= enemy[i])
+            {
+                GameObject _randomEnemy = enemies[i];
+                Debug.Log(_randomEnemy.name);
+                _spawnManager.StartCoroutine("EnemySpawn", _randomEnemy);
+                Debug.Log("Succesfully spawned enemy");
+                return;
+            }
+            else
+            {
+                randomEnemy -= enemy[i];
             }
         }
     }

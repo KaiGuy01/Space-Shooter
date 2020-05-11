@@ -11,7 +11,10 @@ public class SpawnManager : MonoBehaviour
     private GameObject _enemy;
 
     [SerializeField]
-    private UnityEngine.Vector2 _spawnDelay = new UnityEngine.Vector2(2, 5);
+    private UnityEngine.Vector2 _spawnDelayP = new UnityEngine.Vector2(2, 5);
+
+    [SerializeField]
+    private UnityEngine.Vector2 _spawnDelayE = new UnityEngine.Vector2(5, 7.5f);
 
     [SerializeField]
     private GameObject _enemyContainer;
@@ -30,37 +33,46 @@ public class SpawnManager : MonoBehaviour
         {
             Debug.LogError(gameObject.name + " Table reference is NULL");
         }
+
+        if (_player == null)
+        {
+            Debug.LogError(gameObject.name + " Player reference is NULL");
+        }
     }
 
     public void StartSpawning()
     {
-        StartCoroutine("EnemySpawn");
-        _table.CalculateLoot();
+        _table.CalculateEnemy();
+        _table.CalculatePowerup();
     }
 
-    IEnumerator EnemySpawn()
+    IEnumerator EnemySpawn(GameObject _randomEnemy)
     {
-        _player = GameObject.FindGameObjectWithTag("Player");
-
-
-        while (_player != null)
+        GameObject _player = GameObject.FindGameObjectWithTag("Player");
+        if (_player != null)
         {
-            yield return null;
+            _player = GameObject.FindGameObjectWithTag("Player");
             float _randomX = Random.Range(-8, 8);
-            GameObject newEnemy = Instantiate(_enemy, new UnityEngine.Vector3(_randomX, 7f, transform.position.z), UnityEngine.Quaternion.identity);
+            yield return null;
+            GameObject newEnemy = Instantiate(_randomEnemy, new UnityEngine.Vector3(_randomX, 7f, transform.position.z), UnityEngine.Quaternion.identity);
             newEnemy.transform.parent = _enemyContainer.transform;
-            yield return new WaitForSeconds(Random.Range(_spawnDelay.x, _spawnDelay.y));
+            yield return new WaitForSeconds(Random.Range(_spawnDelayE.x, _spawnDelayE.y));
+            _table.CalculateEnemy();
         }
     }
 
     IEnumerator PowerupSpawn(GameObject _randomPowerup)
     {
-        Debug.Log("Powerup spawn initialized");
-        //int _randomPowerup = Random.Range(0, 6);
-        float _randomX = Random.Range(-8, 8);
-        yield return null;
-        Instantiate(_randomPowerup, new UnityEngine.Vector3(_randomX, 7f, transform.position.z), UnityEngine.Quaternion.identity);
-        yield return new WaitForSeconds(Random.Range(_spawnDelay.x, _spawnDelay.y));
-        _table.CalculateLoot();
+        GameObject _player = GameObject.FindGameObjectWithTag("Player");
+        if (_player != null)
+        {
+            Debug.Log("Powerup spawn initialized");
+            //int _randomPowerup = Random.Range(0, 6);
+            float _randomX = Random.Range(-8, 8);
+            yield return null;
+            Instantiate(_randomPowerup, new UnityEngine.Vector3(_randomX, 7f, transform.position.z), UnityEngine.Quaternion.identity);
+            yield return new WaitForSeconds(Random.Range(_spawnDelayP.x, _spawnDelayP.y));
+            _table.CalculatePowerup();
+        }
     }
 }

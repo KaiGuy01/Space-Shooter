@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using UnityEngine;
 
 public class Laser : MonoBehaviour
@@ -7,18 +8,20 @@ public class Laser : MonoBehaviour
     [SerializeField]
     private float _speed = 8.0f;
 
-    private bool _isEnemyLaser = false;
+    [SerializeField]
+    private int _laserID;
 
     // Update is called once per frame
     void Update()
     {
-        if (_isEnemyLaser == false)
+        switch (_laserID)
         {
-            MoveUp();
-        }
-        else
-        {
-            MoveDown();
+            case 0:
+                MoveUp();
+                break;
+            case 1:
+                MoveDown();
+                break;
         }
     }
 
@@ -56,17 +59,22 @@ public class Laser : MonoBehaviour
         }
     }
 
-    public void AssignEnemyLaser()
+    public void AssignEnemyLaser(int id)
     {
-        _isEnemyLaser = true;
+        _laserID = id;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (_isEnemyLaser == true && other.tag == "Player")
+        if (_laserID == 1 && other.tag == "Player")
         {
             Player player = other.GetComponent<Player>();
             player.Damage(1);
         }
+    }
+
+    public int GetLaser()
+    {
+        return _laserID;
     }
 }

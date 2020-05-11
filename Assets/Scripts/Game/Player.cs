@@ -280,6 +280,7 @@ public class Player : MonoBehaviour
         {
             _isShieldActive = true;
             _shieldVisualizer.SetActive(true);
+            _shieldVisualizer.GetComponent<SpriteRenderer>().color = new Color(0, 255, 225);
             _uIManager.UpdateShield(_shieldStrength);
         }
     }
