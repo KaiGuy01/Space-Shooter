@@ -90,6 +90,8 @@ public class Player : MonoBehaviour
         {
             _audioSource.clip = _laserAudio;
         }
+
+        RestoreAmmo();
     }
 
     void Update()
